@@ -5,8 +5,9 @@ import os
 
 # Load API_KEY from defaults.cfg
 app = Flask(__name__)
-app.config.from_pyfile('default.cfg')
-api_key = app.config.get('API_KEY', '')
+app.config.from_pyfile('default.cfg', silent=True)
+app.config['API_KEY'] = os.environ.get('API_KEY', app.config.get('API_KEY', ''))
+api_key = app.config['API_KEY']
 
 @app.route('/')
 def home():
